@@ -128,7 +128,7 @@ sudo apt install python3-pip -y
 sudo pip3 install ansible           # Global
 pip3 install --user ansible         # Local
 
-echo 'export PATH="$PATH:~/.local/bin"' >> ~/.bashrc
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
