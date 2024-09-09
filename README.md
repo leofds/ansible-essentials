@@ -1277,6 +1277,7 @@ You can change the default collections path in the ansible.cfg file by changin t
 ## 14.5 Filter Plugin <a name="filter_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/filter.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#filter-plugins)
 
 **Filter sample**
 
