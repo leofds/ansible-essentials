@@ -67,7 +67,15 @@ GitHub: https://github.com/ansible/ansible<br>
 12.1.3. [Using Python](#verify_your_module_using_python)<br>
 13. [Developing Collections](#developing_collections)<br>
 14. [Developing Plugins](#developing_plugins)<br>
-14.1. [Filter Plugin](#filter_plugin)<br>
+14.1. [Action Plugin](#action_plugin)<br>
+14.2. [Cache Plugin](#cache_plugin)<br>
+14.3. [Callback Plugin](#callback_plugin)<br>
+14.4. [Connection Plugin](#connection_plugin)<br>
+14.5. [Filter Plugin](#filter_plugin)<br>
+14.6. [Inventory Plugin](#inventory_plugin)<br>
+14.7. [Lookup Plugin](#lookup_plugin)<br>
+14.8. [Test Plugin](#test_plugin)<br>
+14.9. [Vars Plugin](#vars_plugin)<br>
 
 # 1. Introduction <a name="introduction"></a>
 
@@ -1246,7 +1254,27 @@ You can change the default collections path in the ansible.cfg file by changin t
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 [[Working with plugins]](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
-## 14.1 Filter Plugin <a name="filter_plugin"></a>
+## 14.1 Action Plugin <a name="action_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/action.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#action-plugins)
+
+## 14.2 Cache Plugin <a name="cache_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/cache.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#cache-plugins)
+
+## 14.3 Callback Plugin <a name="callback_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/callback.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins)
+
+## 14.4 Connection Plugin <a name="connection_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/connection.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#connection-plugins)
+
+## 14.5 Filter Plugin <a name="filter_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/filter.html)
 
@@ -1280,3 +1308,23 @@ class FilterModule(object):
         msg: "{{ 'hello world' | to_upper }}"
         # msg: "{{ 'hello world' | my_namespace.my_collection.to_upper }}"
 ```
+
+## 14.6 Inventory Plugin <a name="inventory_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#inventory-plugins)
+
+## 14.7 Lookup Plugin <a name="lookup_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#lookup-plugins)
+
+## 14.8 Test Plugin <a name="test_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/test.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#test-plugins)
+
+## 14.9 Vars Plugin <a name="vars_plugin"></a>
+
+[[doc]](https://docs.ansible.com/ansible/latest/plugins/vars.html)
+[[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#vars-plugins)
