@@ -1268,6 +1268,7 @@ You can change the default collections path in the ansible.cfg file by changin t
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/callback.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins)
+[[examples]](https://github.com/ansible/ansible/tree/devel/lib/ansible/plugins/callback)
 
 ## 14.4 Connection Plugin <a name="connection_plugin"></a>
 
