@@ -622,6 +622,7 @@ when: bar is undefined
 when: x is not defined
 when: my_string.startswith('prefix_')
 when: "'substring' in my_string"
+when: "'servers' in group_names"
 ```
 
 **Boolean operators AND/OR**
