@@ -652,7 +652,7 @@ when: (name == "leo" and version == "5") or
 ```
 
 ```yaml
-replace: "role={{ 'value_if_true' if some_condition else 'value_if_false' }}"
+myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
 ```
 
 ### 8.2.2 Loops <a name="loops"></a>
