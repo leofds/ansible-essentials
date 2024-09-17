@@ -29,6 +29,7 @@ GitHub: https://github.com/ansible/ansible<br>
 7.6. [Special Variables](#special_variables)<br>
 7.7. [Ansible Facts](#ansible_facts)<br>
 7.8. [Registering variables](#registering_variables)<br>
+7.9. [Variables precedence](#variables_precedence)<br>
 8. [Playbooks](#playbooks)<br>
 8.1. [Keywords](#playbooks_keywords)<br>
 8.2. [Tasks](#playbooks_tasks)<br>
