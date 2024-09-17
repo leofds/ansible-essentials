@@ -645,6 +645,16 @@ when: (name == "leo" and version == "5") or
       (name == "admin" and version == "6")
 ```
 
+**Ternary**
+
+```yaml
+{{ condition | ternary(true_value, false_value) }}
+```
+
+```yaml
+replace: "role={{ 'value_if_true' if some_condition else 'value_if_false' }}"
+```
+
 ### 8.2.2 Loops <a name="loops"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html)
