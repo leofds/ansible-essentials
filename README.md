@@ -1004,6 +1004,12 @@ Plugins are pieces of code that augment Ansible’s core functionality. This sec
 
 [doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
 
+**b64decode**
+Base64 decode a string
+```yaml
+"{{ 'bG9sYQ==' | b64decode }}"
+```
+
 **b64encode**
 Base64 encode a string
 ```yaml
@@ -1013,7 +1019,7 @@ Base64 encode a string
 **basename**
 To get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'.
 ```yaml
-{{ mypath | basename }}
+"{{ mypath | basename }}"
 ```
 
 # 12 Vault <a name="vault"></a>
