@@ -52,6 +52,7 @@ GitHub: https://github.com/ansible/ansible<br>
 10.2.1. [Play level](#roles_play_level)<br>
 10.2.2. [Task level](#roles_task_level)<be>
 11. [Plugins](#plugins)<br>
+11.1. [Builtin Filter Plugin](#builtin_filter_plugin)<br>
 12. [Vault](#vault)<br>
 12.1. [Vault Password](#vault_password)<br>
 12.2. [Variable-level encryption](#vault_variable_level)<br>
@@ -1003,9 +1004,15 @@ Plugins are pieces of code that augment Ansible’s core functionality. This sec
 
 [doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
 
-**basename**
+**b64encode**
+Base64 encode a string
 ```yaml
-# To get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'.
+"{{ 'Jose'| b64encode }}"
+```
+
+**basename**
+To get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'.
+```yaml
 {{ mypath | basename }}
 ```
 
