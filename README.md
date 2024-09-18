@@ -1004,22 +1004,15 @@ Plugins are pieces of code that augment Ansible’s core functionality. This sec
 
 [doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
 
-**b64decode**
-Base64 decode a string
 ```yaml
-"{{ 'bG9sYQ==' | b64decode }}"
-```
-
-**b64encode**
-Base64 encode a string
-```yaml
-"{{ 'Jose'| b64encode }}"
-```
-
-**basename**
-To get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'.
-```yaml
-"{{ mypath | basename }}"
+{{ 'bG9sYQ==' | b64decode }}         # Decode a Base64 string
+{{ 'Jose'| b64encode }}              # Encode a string as Base64
+{{ mypath | basename }}              # Get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'
+{{ (a == b) | bool }}                # Cast into a boolean
+{{ 'test2' | checksum }}             # Checksum (SHA-1) of input data. => "109f4b3c50d7b0df729d299bc6f8e9ef9066971f"
+{{ [1,2,3,4,5] | combinations(2) }}  # Combinations from the elements of a list. => [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 4 ], [ 3, 5 ], [ 4, 5 ] ]
+{{ {'a':1, 'b':2} | ansible.builtin.combine({'b':3, 'c':4}) }}  # Combine two dictionaries. => {'a':1, 'b':3, 'c': 4}
+{{ 'Plain style (default)' | comment }}  # comment out a string
 ```
 
 # 12 Vault <a name="vault"></a>
