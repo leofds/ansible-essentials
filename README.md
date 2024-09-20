@@ -45,14 +45,14 @@ GitHub: https://github.com/ansible/ansible<br>
 8.6. [Tags](#tags)<br>
 9. [Modules](#modules)<br>
 9.1. [Executing modules from the command line](#running_modules_from_command_line)<br>
-9.2. [Executing modules from playbooks](#running_modules_from_playbooks)<be>
-10. [Roles](#roles)<br>
-10.1. [Creating a role (task)](#creating_roles)<br>
-10.2. [Using roles](#using_roles)<br>
-10.2.1. [Play level](#roles_play_level)<br>
-10.2.2. [Task level](#roles_task_level)<be>
-11. [Plugins](#plugins)<br>
-11.1. [Builtin Filter Plugin](#builtin_filter_plugin)<br>
+9.2. [Executing modules from playbooks](#running_modules_from_playbooks)<br>
+10. [Plugins](#plugins)<br>
+10.1. [Filter](#filter)<be>
+11. [Roles](#roles)<br>
+11.1. [Creating a role (task)](#creating_roles)<br>
+11.2. [Using roles](#using_roles)<br>
+11.2.1. [Play level](#roles_play_level)<br>
+11.2.2. [Task level](#roles_task_level)<br>
 12. [Vault](#vault)<br>
 12.1. [Vault Password](#vault_password)<br>
 12.2. [Variable-level encryption](#vault_variable_level)<br>
@@ -890,7 +890,86 @@ ansible device1 -m service -a "name=httpd state=started"   # With arguments key=
     state: restarted                  # Module args
 ```
 
-# 10 Roles <a name="roles"></a>
+# 10 Plugins <a name="plugins"></a>
+
+Plugins are pieces of code that augment Ansible’s core functionality. This section covers the various types of plugins that are included with Ansible:
+
+# 10.1 Filter <a name="filter"></a>
+
+[[filter-plugins]](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
+[[playbook-filters]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_filters.html)
+
+**Default values**
+
+```yaml
+{{ some_variable | default(5) }}
+```
+
+**Optional Variable**
+
+```yaml
+mode: "{{ item.mode | default(omit) }}"    # mode does not send a value for mode if the item.mode is not defined
+```
+
+**Mandatory values**
+
+```yaml
+{{ variable | mandatory }}
+```
+```yaml
+{{ some_variable | default(5) }}
+```
+
+**Ternary**
+
+```yaml
+{{ condition | ternary(true_value, false_value) }}
+{{ condition | ternary(true_value, false_value, omit) }}  # Third value on null
+```
+
+```yaml
+myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
+```
+
+**Base64**
+
+```yaml
+{{ 'bG9sYQ==' | b64decode }}         # Decode a Base64 string
+{{ 'Jose'| b64encode }}              # Encode a string as Base64
+```
+
+**Path basename**
+
+```yaml
+{{ mypath | basename }}              # Get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'
+```
+
+**Cast**
+
+```yaml
+{{ (a == b) | bool }}                # Cast into a boolean
+```
+
+**Checksum**
+
+```yaml
+{{ 'test2' | checksum }}             # Checksum (SHA-1) of input data. => "109f4b3c50d7b0df729d299bc6f8e9ef9066971f"
+```
+
+**Combination**
+
+```yaml
+{{ [1,2,3,4,5] | combinations(2) }}  # Combinations from the elements of a list. => [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 4 ], [ 3, 5 ], [ 4, 5 ] ]
+{{ {'a':1, 'b':2} | ansible.builtin.combine({'b':3, 'c':4}) }}  # Combine two dictionaries. => {'a':1, 'b':3, 'c': 4}
+```
+
+**Comment**
+
+```yaml
+{{ 'Plain style (default)' | comment }}  # comment out a string
+```
+
+# 11 Roles <a name="roles"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
 
@@ -929,7 +1008,7 @@ Default locations:
 
 You can store the roles in a different location settings `roles_path` in the ansible.cfg
 
-## 10.1 Creating a role (task) <a name="creating_roles"></a>
+## 11.1 Creating a role (task) <a name="creating_roles"></a>
 
 `/etc/ansible/roles/example/tasks/main.yml`
 
@@ -938,9 +1017,9 @@ You can store the roles in a different location settings `roles_path` in the ans
   # ....
 ```
 
-## 10.2 Using roles <a name="using_roles"></a>
+## 11.2 Using roles <a name="using_roles"></a>
 
-## 10.2.1 Play level <a name="roles_play_level"></a>
+## 11.2.1 Play level <a name="roles_play_level"></a>
 
 Roles in the session roles run before any other tasks in a play.
 
@@ -960,7 +1039,7 @@ Roles in the session roles run before any other tasks in a play.
         app_port: 5000
 ```
 
-## 10.2.2 Task level <a name="roles_task_level"></a>
+## 11.2.2 Task level <a name="roles_task_level"></a>
 
 **Including roles: dynamic use**
 
@@ -984,58 +1063,6 @@ The behavior is the same as using the roles keyword.
     - name: Import the example role
       import_role:
         name: example
-```
-
-# 11 Plugins <a name="plugins"></a>
-
-Plugins are pieces of code that augment Ansible’s core functionality. This section covers the various types of plugins that are included with Ansible:
-
-# 11.1 Builtin Filter Plugin <a name="builtin_filter_plugin"></a>
-
-[filter-plugins](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
-[playbook-filters](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_filters.html)
-
-**Default values**
-
-```yaml
-{{ some_variable | default(5) }}
-```
-
-**Optional Variable**
-
-```yaml
-mode: "{{ item.mode | default(omit) }}"    # mode does not send a value for mode if the item.mode is not defined
-```
-
-**Mandatory values**
-
-```yaml
-{{ variable | mandatory }}
-```
-```yaml
-{{ some_variable | default(5) }}
-```
-
-**Ternary**
-
-```yaml
-{{ condition | ternary(true_value, false_value) }}
-{{ condition | ternary(true_value, false_value, omit) }}  # Third value on null
-```
-
-```yaml
-myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
-```
-
-```yaml
-{{ 'bG9sYQ==' | b64decode }}         # Decode a Base64 string
-{{ 'Jose'| b64encode }}              # Encode a string as Base64
-{{ mypath | basename }}              # Get the last name of a file path, like 'foo.txt' out of '/etc/asdf/foo.txt'
-{{ (a == b) | bool }}                # Cast into a boolean
-{{ 'test2' | checksum }}             # Checksum (SHA-1) of input data. => "109f4b3c50d7b0df729d299bc6f8e9ef9066971f"
-{{ [1,2,3,4,5] | combinations(2) }}  # Combinations from the elements of a list. => [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 2, 3 ], [ 2, 4 ], [ 2, 5 ], [ 3, 4 ], [ 3, 5 ], [ 4, 5 ] ]
-{{ {'a':1, 'b':2} | ansible.builtin.combine({'b':3, 'c':4}) }}  # Combine two dictionaries. => {'a':1, 'b':3, 'c': 4}
-{{ 'Plain style (default)' | comment }}  # comment out a string
 ```
 
 # 12 Vault <a name="vault"></a>
