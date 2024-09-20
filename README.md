@@ -675,16 +675,6 @@ when: (name == "leo" and version == "5") or
       (name == "admin" and version == "6")
 ```
 
-**Ternary**
-
-```yaml
-{{ condition | ternary(true_value, false_value) }}
-```
-
-```yaml
-myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
-```
-
 ### 8.2.2 Loops <a name="loops"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html)
@@ -1002,7 +992,40 @@ Plugins are pieces of code that augment Ansible’s core functionality. This sec
 
 # 11.1 Builtin Filter Plugin <a name="builtin_filter_plugin"></a>
 
-[doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
+[filter-plugins](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
+[playbook-filters](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_filters.html)
+
+**Default values**
+
+```yaml
+{{ some_variable | default(5) }}
+```
+
+**Optional Variable**
+
+```yaml
+mode: "{{ item.mode | default(omit) }}"    # mode does not send a value for mode if the item.mode is not defined
+```
+
+**Mandatory values**
+
+```yaml
+{{ variable | mandatory }}
+```
+```yaml
+{{ some_variable | default(5) }}
+```
+
+**Ternary**
+
+```yaml
+{{ condition | ternary(true_value, false_value) }}
+{{ condition | ternary(true_value, false_value, omit) }}  # Third value on null
+```
+
+```yaml
+myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
+```
 
 ```yaml
 {{ 'bG9sYQ==' | b64decode }}         # Decode a Base64 string
