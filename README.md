@@ -916,9 +916,6 @@ mode: "{{ item.mode | default(omit) }}"    # mode does not send a value for mode
 ```yaml
 {{ variable | mandatory }}
 ```
-```yaml
-{{ some_variable | default(5) }}
-```
 
 **Ternary**
 
@@ -966,8 +963,59 @@ myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
 **Comment**
 
 ```yaml
-{{ 'Plain style (default)' | comment }}  # comment out a string
+{{ 'Plain style (default)' | comment }}
+
+#
+# Plain style (default)
+#
 ```
+
+```yaml
+{{ "C style" | comment('c') }}
+{{ "C block style" | comment('cblock') }}
+{{ "Erlang style" | comment('erlang') }}
+{{ "XML style" | comment('xml') }}
+```
+
+```yaml
+{{ "My Special Case" | comment(decoration="! ") }}
+
+!
+! My Special Case
+!
+```
+
+```yaml
+{{ "Custom style" | comment('plain', prefix='#######\n#', postfix='#\n#######\n   ###\n    #') }}
+
+#######
+#
+# Custom style
+#
+#######
+   ###
+    #
+```
+
+```yaml
+ansible_managed = This file is managed by Ansible.%n
+  template: {file}
+  date: %Y-%m-%d %H:%M:%S
+  user: {uid}
+  host: {host}
+
+{{ ansible_managed | comment }}
+
+#
+# This file is managed by Ansible.
+#
+# template: /home/ansible/env/dev/ansible_managed/roles/role1/templates/test.j2
+# date: 2015-09-10 11:02:58
+# user: ansible
+# host: myhost
+#
+```
+
 
 # 11 Roles <a name="roles"></a>
 
