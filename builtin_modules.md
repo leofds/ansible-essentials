@@ -25,6 +25,7 @@ Back to [Ansible](https://github.com/leofds/notes/tree/master/ansible/ansible.md
 15. [Wait_for](#wait_for)
 16. [Get_URL](#get_url)
 17. [Replace](#replace)
+18. [Reboot](#Reboot)
 
 # 1. Debug <a name="debug"></a>
 
@@ -396,4 +397,16 @@ This module will replace all instances of a pattern within a file.
     path: /etc/hosts
     regexp: '^value=""'
     replace: 'value="dummy"'
+```
+
+# 18. Reboot <a name="reboot"></a>
+
+[[reboot_module]](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/reboot_module.html)
+
+Reboot a machine, wait for it to go down, come back up, and respond to commands..
+
+```yaml
+- name: Reboot the machine
+  ansible.builtin.reboot:
+    reboot_timeout: 3600      # Maximum seconds to wait for machine to reboot and respond to a test command.
 ```
