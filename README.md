@@ -218,6 +218,7 @@ ansible-playbook myplaybook.yml --vault-password-file pass_file    # vault passw
 **Doc**
 ```shell
 ansible-doc shell                                         # shows documentation of the shell module
+ansible-doc -t callback -l                                # shows callback plugins
 ```
 
 **Run Module**
