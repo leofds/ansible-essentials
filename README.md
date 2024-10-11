@@ -575,7 +575,9 @@ The order of precedence from least to greatest (the last listed variables overri
   become_method: su
   become_user: nobody       # default root
   become_pass:
+  become_flags: "-i"        # load the user env
   become_flags: '-s /bin/sh'
+  
   service:                   # Controls services on remote hosts. Ensure the httpd service is running
     name: httpd
     state: started
