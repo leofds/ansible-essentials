@@ -1083,6 +1083,12 @@ Roles in the session roles run before any other tasks in a play.
 ```yaml
 - hosts: all
   roles:
+    - my_namespace.my_collection.role1
+```
+
+```yaml
+- hosts: all
+  roles:
     - example
     - common:
       vars:
