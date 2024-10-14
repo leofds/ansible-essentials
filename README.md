@@ -486,6 +486,10 @@ ansible_ssh_private_key_file: "/home/leo/.ssh/id_ed25519"
 ansible_python_interpreter: "/usr/bin/python3"
 ```
 
+```yaml
+ansible_verbosity
+```
+
 ## 7.7 Ansible Facts <a name="ansible_facts"></a>
 
 Ansible facts are data related to your remote systems.
