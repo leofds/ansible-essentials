@@ -26,6 +26,7 @@ Back to [Ansible](https://github.com/leofds/notes/tree/master/ansible/ansible.md
 16. [Get_URL](#get_url)
 17. [Replace](#replace)
 18. [Reboot](#Reboot)
+19. [Import tasks](#import_tasks)
 
 # 1. Debug <a name="debug"></a>
 
@@ -409,4 +410,22 @@ Reboot a machine, wait for it to go down, come back up, and respond to commands.
 - name: Reboot the machine
   ansible.builtin.reboot:
     reboot_timeout: 3600      # Maximum seconds to wait for machine to reboot and respond to a test command.
+```
+
+# 19. Import tasks <a name="import_tasks"></a>
+
+[[ansible.builtin.import_tasks module]](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_tasks_module.html)
+
+Imports a list of tasks to be added to the current playbook for subsequent execution.
+
+```yaml
+- hosts: all
+  tasks:
+    - name: Include task list in play
+      ansible.builtin.import_tasks:
+        file: stuff.yaml
+
+    - name: Apply conditional to all imported tasks
+      ansible.builtin.import_tasks: stuff.yaml
+      when: hostvar is defined
 ```
