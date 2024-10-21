@@ -185,6 +185,8 @@ ansible --version
 ```shell
 ansible-inventory --list
 ansible-inventory --graph
+ansible-inventory --graph <group_name>
+ansible-inventory --host <host>
 ```
 
 **Run Playbook**
