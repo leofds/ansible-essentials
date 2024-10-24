@@ -53,6 +53,7 @@ GitHub: https://github.com/ansible/ansible<br>
 11.2. [Using roles](#using_roles)<br>
 11.2.1. [Play level](#roles_play_level)<br>
 11.2.2. [Task level](#roles_task_level)<br>
+11.2.3. [Running specific task files](#roles_specific_task)<br>
 12. [Vault](#vault)<br>
 12.1. [Vault Password](#vault_password)<br>
 12.2. [Variable-level encryption](#vault_variable_level)<br>
@@ -1127,6 +1128,27 @@ The behavior is the same as using the roles keyword.
       import_role:
         name: example
 ```
+
+## 11.2.3 Running specific task files <a name="roles_specific_task"></a>
+
+You can avoid running the default `main.yml` by using `tasks_from`
+
+```yaml
+- name: Run specific task from the role
+  include_role:
+    name: example
+    tasks_from: your_tasks_file.yml
+```
+
+Another approach is to modify main.yml only to run certain tasks when a condition is met.
+
+```yaml
+# In main.yml
+- name: Run specific tasks
+  include_tasks: your_tasks_file.yml
+  when: some_condition
+```
+
 
 # 12 Vault <a name="vault"></a>
 
