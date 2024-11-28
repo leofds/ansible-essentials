@@ -582,7 +582,7 @@ The order of precedence from least to greatest (the last listed variables overri
   become_method: su
   become_user: nobody       # default root
   become_pass:
-  become_flags: "-i"        # load the user env
+  become_flags: "-i"        # loads the user's login shell as if the user logged in interactively. It loads the environment variables from the user's profile, such as /etc/profile, ~/.bash_profile, or ~/.bashrc, depending on the shell configuration. Ansible uses non-interactive sessions.
   become_flags: '-s /bin/sh'
   
   service:                   # Controls services on remote hosts. Ensure the httpd service is running
