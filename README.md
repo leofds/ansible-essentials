@@ -18,6 +18,7 @@ GitHub: https://github.com/ansible/ansible<br>
 5. [Inventory](#inventory)<br>
 5.1. [Adding Hosts](#add_hosts)<br>
 5.2. [Adding Groups](#add_groups)<br>
+5.3. [Dynamic Inventory](#dynamic_inventory)<br>
 6. [Introducing Playbooks](#intro_playbooks)<br>
 6.1. [Runnig playbook locally (localhost)](#run_playbooks)<br>
 7. [Variables](#variables)<br>
@@ -301,7 +302,7 @@ my_group3:      # group name
     my_group1:
     my_group2:
 ```
-## 5.3 Dynamic Inventory
+## 5.3 Dynamic Inventory <a name="dynamic_inventory"></a>
 
 The inventory can be defined in runtime, in a task with the module [add_host](https://github.com/leofds/ansible-essentials/blob/master/builtin_modules.md#add_host)
 
