@@ -301,6 +301,9 @@ my_group3:      # group name
     my_group1:
     my_group2:
 ```
+## 5.3 Dynamic Inventory
+
+The inventory can be defined in runtime, in a task with the module [add_host](https://github.com/leofds/ansible-essentials/blob/master/builtin_modules.md#add_host)
 
 # 6 Introducing Playbooks <a name="intro_playbooks"></a>
 
