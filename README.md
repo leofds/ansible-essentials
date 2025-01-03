@@ -854,6 +854,8 @@ Handlers are tasks that only run when notified. Usually when a task made a chang
 
 ## 8.6 Importing tasks from another file <a name="importing_tasks"></a>
 
+[[doc]](https://docs.ansible.com/ansible/2.8/modules/import_tasks_module.html)
+
 ```yaml
 - name: Run tasks from another file
   hosts: localhost
