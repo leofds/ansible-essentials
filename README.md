@@ -863,6 +863,18 @@ Handlers are tasks that only run when notified. Usually when a task made a chang
     - import_tasks: tasks_file.yml
 ```
 
+Sample file `tasks_file.yml`
+
+```yaml
+- name: Sample task 1
+  debug:
+    msg: "Hello 1"
+
+- name: Sample task 2
+  debug:
+    msg: "Hello 2"
+```
+
 ## 8.7 Tags <a name="tags"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html)
