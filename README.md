@@ -43,7 +43,8 @@ GitHub: https://github.com/ansible/ansible<br>
 8.3.2. [`always` section](#blocks_always)<br>
 8.4. [Handlers](#handlers)<br>
 8.5. [Importing a playbook](#importing_playbooks)<br>
-8.6. [Tags](#tags)<br>
+8.6. [Importing tasks from another fil](#importing_tasks)<br>
+8.7. [Tags](#tags)<br>
 9. [Modules](#modules)<br>
 9.1. [Executing modules from the command line](#running_modules_from_command_line)<br>
 9.2. [Executing modules from playbooks](#running_modules_from_playbooks)<br>
@@ -851,7 +852,16 @@ Handlers are tasks that only run when notified. Usually when a task made a chang
     value: 'dummy'
 ```
 
-## 8.6 Tags <a name="tags"></a>
+## 8.6 Importing tasks from another file <a name="importing_tasks"></a>
+
+```yaml
+- name: Run tasks from another file
+  hosts: localhost
+  tasks:
+    - import_tasks: tasks_file.yml
+```
+
+## 8.7 Tags <a name="tags"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html)
 
