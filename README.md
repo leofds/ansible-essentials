@@ -880,6 +880,13 @@ Add tags to your tasks to skip or run tasks individually.
     - tag2
 ```
 
+Running playbook setting the tags
+
+```yaml
+ansible-playbook myplaybook.yml --tags tag1,tag2         # (-t) only run plays and tasks tagged with these values
+ansible-playbook myplaybook.yml --skip-tags tag1         # only run plays and tasks whose tags do not match these values
+```
+
 # 9 Modules <a name="modules"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/module_plugin_guide/index.html)
