@@ -43,7 +43,7 @@ GitHub: https://github.com/ansible/ansible<br>
 8.3.2. [`always` section](#blocks_always)<br>
 8.4. [Handlers](#handlers)<br>
 8.5. [Importing a playbook](#importing_playbooks)<br>
-8.6. [Importing tasks from another fil](#importing_tasks)<br>
+8.6. [Importing tasks from another file](#importing_tasks)<br>
 8.7. [Tags](#tags)<br>
 9. [Modules](#modules)<br>
 9.1. [Executing modules from the command line](#running_modules_from_command_line)<br>
