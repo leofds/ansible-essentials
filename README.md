@@ -880,7 +880,7 @@ Add tags to your tasks to skip or run tasks individually.
     - tag2
 ```
 
-Running playbook setting the tags
+Running the playbook
 
 ```yaml
 ansible-playbook myplaybook.yml --tags tag1,tag2         # (-t) only run plays and tasks tagged with these values
