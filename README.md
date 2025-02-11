@@ -1327,7 +1327,7 @@ ansible-playbook hello.yml --vault-id leo@prompt --vault-id dev@prompt  # Asing 
 
 # 13 Collection <a name="collection"></a>
 
-(doc)[https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html]
+[doc](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html)
 
 A collection is a data structure that can contain these directories and files:
 
