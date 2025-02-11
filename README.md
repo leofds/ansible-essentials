@@ -66,7 +66,7 @@ GitHub: https://github.com/ansible/ansible<br>
 12.3.2. [Decrypting files](#vault_decrypting_files)<br>
 12.3.3. [Rotating password](#vault_rotating_password)<br>
 12.4. [Vault ID - Multiple passwords](#vault_id)<br>
-13 [Collection](#collection)<br>
+13. [Collection](#collection)<br>
 14. [Developing Modules](#developing_modules)<br>
 14.1. [Verifying your module locally](#verify_your_module)<br>
 14.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
