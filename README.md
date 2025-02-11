@@ -1334,7 +1334,7 @@ A collection is a data structure that can contain these directories and files:
 ```
 collection/
   docs/
-    galaxy.yml
+  galaxy.yml
   meta/
     runtime.yml
   plugins/
