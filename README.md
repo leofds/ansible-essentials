@@ -1333,26 +1333,26 @@ A collection is a data structure that can contain these directories and files:
 
 ```
 collection/
-  docs/
-  galaxy.yml
-  meta/
-    runtime.yml
-  plugins/
-    modules/
-      module1.py
-    inventory/
-    .../
-  README.md
-  roles/
-    role1/
-    role2/
-    .../
-  playbooks/
-    files/
-    vars/
-    templates/
-    tasks/
-  tests/
+    docs/
+    galaxy.yml
+    meta/
+        runtime.yml
+    plugins/
+        modules/
+            module1.py
+        inventory/
+        .../
+    README.md
+    roles/
+        role1/
+        role2/
+        .../
+    playbooks/
+        files/
+        vars/
+        templates/
+        tasks/
+    tests/
 ```
 
 **galaxy.yml**
