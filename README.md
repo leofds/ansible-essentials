@@ -66,22 +66,23 @@ GitHub: https://github.com/ansible/ansible<br>
 12.3.2. [Decrypting files](#vault_decrypting_files)<br>
 12.3.3. [Rotating password](#vault_rotating_password)<br>
 12.4. [Vault ID - Multiple passwords](#vault_id)<br>
-13. [Developing Modules](#developing_modules)<br>
-13.1. [Verifying your module locally](#verify_your_module)<br>
-13.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
-13.1.2. [Using the module in a Playbook](#verify_your_module_in_a_playbook)<br>
-13.1.3. [Using Python](#verify_your_module_using_python)<br>
-14. [Developing Collections](#developing_collections)<br>
-15. [Developing Plugins](#developing_plugins)<br>
-15.1. [Action Plugin](#action_plugin)<br>
-15.2. [Cache Plugin](#cache_plugin)<br>
-15.3. [Callback Plugin](#callback_plugin)<br>
-15.4. [Connection Plugin](#connection_plugin)<br>
-15.5. [Filter Plugin](#filter_plugin)<br>
-15.6. [Inventory Plugin](#inventory_plugin)<br>
-15.7. [Lookup Plugin](#lookup_plugin)<br>
-15.8. [Test Plugin](#test_plugin)<br>
-15.9. [Vars Plugin](#vars_plugin)<br>
+13 [Collection](#collection)
+14. [Developing Modules](#developing_modules)<br>
+14.1. [Verifying your module locally](#verify_your_module)<br>
+14.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
+14.1.2. [Using the module in a Playbook](#verify_your_module_in_a_playbook)<br>
+14.1.3. [Using Python](#verify_your_module_using_python)<br>
+15. [Developing Collections](#developing_collections)<br>
+16. [Developing Plugins](#developing_plugins)<br>
+16.1. [Action Plugin](#action_plugin)<br>
+16.2. [Cache Plugin](#cache_plugin)<br>
+16.3. [Callback Plugin](#callback_plugin)<br>
+16.4. [Connection Plugin](#connection_plugin)<br>
+16.5. [Filter Plugin](#filter_plugin)<br>
+16.6. [Inventory Plugin](#inventory_plugin)<br>
+16.7. [Lookup Plugin](#lookup_plugin)<br>
+16.8. [Test Plugin](#test_plugin)<br>
+16.9. [Vars Plugin](#vars_plugin)<br>
 
 # 1. Introduction <a name="introduction"></a>
 
@@ -1324,7 +1325,19 @@ ansible-playbook hello.yml --vault-id leo@prompt --vault-id dev@prompt  # Asing 
 
 > **_NOTE 2:_** Even if the label is wrong, the decryption will work if the password is right. Ansible will try to decrypt files/variables with any password given, first trying to do it with the password of the matching label to increase the performance.
 
-# 13 Developing Modules <a name="developing_modules"></a>
+# 13 Collection <a name="collection"></a>
+
+A collection is a data structure that can contain these directories and files:
+
+```
+src
+|-- docs/
+|-- galaxy.yml
+|-- meta/
+|   |-- runtime.yml
+```
+
+# 14 Developing Modules <a name="developing_modules"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_general.html) [[Should you develop a module?]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules.html#developing-modules)
 
@@ -1342,9 +1355,9 @@ Ansible won't find this module automatically, for that you have these options:
 Module [Return Values](https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html)
 
 
-## 13.1 Verifying your module locally <a name="verify_your_module"></a>
+## 14.1 Verifying your module locally <a name="verify_your_module"></a>
 
-### 13.1.1 Using Ansible adhoc command <a name="verify_your_module_adhoc_command"></a>
+### 14.1.1 Using Ansible adhoc command <a name="verify_your_module_adhoc_command"></a>
 
 Command
 
@@ -1362,7 +1375,7 @@ localhost | CHANGED => {
 }
 ```
 
-### 13.1.2 Using the module in a Playbook <a name="verify_your_module_in_a_playbook"></a>
+### 14.1.2 Using the module in a Playbook <a name="verify_your_module_in_a_playbook"></a>
 
 Create the playbook file `testmod.yml`
 
@@ -1409,7 +1422,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-### 13.1.3 Using Python <a name="verify_your_module_using_python"></a>
+### 14.1.3 Using Python <a name="verify_your_module_using_python"></a>
 
 Create a JSON file `/tmp/args.json`.
 
@@ -1445,7 +1458,7 @@ Output
   }
 }
 ```
-# 14 Developing Collections <a name="developing_collections"></a>
+# 15 Developing Collections <a name="developing_collections"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_creating.html) [[Creating a new collection]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_in_groups.html#developing-modules-in-groups)
 
@@ -1479,33 +1492,33 @@ ansible-galaxy collection publish path/to/my_namespace-my_collection-1.0.0.tar.g
 
 You can change the default collections path in the ansible.cfg file by changin the property `collections_path=`.
 
-# 15 Developing Plugins <a name="developing_plugins"></a>
+# 16 Developing Plugins <a name="developing_plugins"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 [[Working with plugins]](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
-## 15.1 Action Plugin <a name="action_plugin"></a>
+## 16.1 Action Plugin <a name="action_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/action.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#action-plugins)
 
-## 15.2 Cache Plugin <a name="cache_plugin"></a>
+## 16.2 Cache Plugin <a name="cache_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/cache.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#cache-plugins)
 
-## 15.3 Callback Plugin <a name="callback_plugin"></a>
+## 16.3 Callback Plugin <a name="callback_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/callback.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins)
 [[examples]](https://github.com/ansible/ansible/tree/devel/lib/ansible/plugins/callback)
 
-## 15.4 Connection Plugin <a name="connection_plugin"></a>
+## 16.4 Connection Plugin <a name="connection_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/connection.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#connection-plugins)
 
-## 15.5 Filter Plugin <a name="filter_plugin"></a>
+## 16.5 Filter Plugin <a name="filter_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/filter.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#filter-plugins)
@@ -1541,22 +1554,22 @@ class FilterModule(object):
         # msg: "{{ 'hello world' | my_namespace.my_collection.to_upper }}"
 ```
 
-## 15.6 Inventory Plugin <a name="inventory_plugin"></a>
+## 16.6 Inventory Plugin <a name="inventory_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#inventory-plugins)
 
-## 15.7 Lookup Plugin <a name="lookup_plugin"></a>
+## 16.7 Lookup Plugin <a name="lookup_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/lookup.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#lookup-plugins)
 
-## 15.8 Test Plugin <a name="test_plugin"></a>
+## 16.8 Test Plugin <a name="test_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/test.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#test-plugins)
 
-## 15.9 Vars Plugin <a name="vars_plugin"></a>
+## 16.9 Vars Plugin <a name="vars_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/vars.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#vars-plugins)
