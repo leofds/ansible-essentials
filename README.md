@@ -48,41 +48,42 @@ GitHub: https://github.com/ansible/ansible<br>
 9. [Modules](#modules)<br>
 9.1. [Executing modules from the command line](#running_modules_from_command_line)<br>
 9.2. [Executing modules from playbooks](#running_modules_from_playbooks)<br>
-10. [Plugins](#plugins)<br>
-10.1. [Filter](#filter)<be>
-11. [Roles](#roles)<br>
-11.1. [Creating a role (task)](#creating_roles)<br>
-11.2. [Using roles](#using_roles)<br>
-11.2.1. [Play level](#roles_play_level)<br>
-11.2.2. [Task level](#roles_task_level)<br>
-11.2.3. [Running specific task files](#roles_specific_task)<br>
-12. [Vault](#vault)<br>
-12.1. [Vault Password](#vault_password)<br>
-12.2. [Variable-level encryption](#vault_variable_level)<br>
-12.2.1. [Encrypting variables](#vault_variable_encryption)<br>
-12.2.2. [Viewing encrypted variables](#view_encryt_variable)<br>
-12.3. [File-level encryption](#vault_file_level)<br>
-12.3.1. [Encrypting files](#vault_encrypting_files)<br>
-12.3.2. [Decrypting files](#vault_decrypting_files)<br>
-12.3.3. [Rotating password](#vault_rotating_password)<br>
-12.4. [Vault ID - Multiple passwords](#vault_id)<br>
-13. [Collection](#collection)<br>
-14. [Developing Modules](#developing_modules)<br>
-14.1. [Verifying your module locally](#verify_your_module)<br>
-14.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
-14.1.2. [Using the module in a Playbook](#verify_your_module_in_a_playbook)<br>
-14.1.3. [Using Python](#verify_your_module_using_python)<br>
-15. [Developing Collections](#developing_collections)<br>
-16. [Developing Plugins](#developing_plugins)<br>
-16.1. [Action Plugin](#action_plugin)<br>
-16.2. [Cache Plugin](#cache_plugin)<br>
-16.3. [Callback Plugin](#callback_plugin)<br>
-16.4. [Connection Plugin](#connection_plugin)<br>
-16.5. [Filter Plugin](#filter_plugin)<br>
-16.6. [Inventory Plugin](#inventory_plugin)<br>
-16.7. [Lookup Plugin](#lookup_plugin)<br>
-16.8. [Test Plugin](#test_plugin)<br>
-16.9. [Vars Plugin](#vars_plugin)<br>
+10. [Templates](#templates)<br>
+11. [Plugins](#plugins)<br>
+11.1. [Filter](#filter)<br>
+12. [Roles](#roles)<br>
+12.1. [Creating a role (task)](#creating_roles)<br>
+12.2. [Using roles](#using_roles)<br>
+12.2.1. [Play level](#roles_play_level)<br>
+12.2.2. [Task level](#roles_task_level)<br>
+12.2.3. [Running specific task files](#roles_specific_task)<br>
+13. [Vault](#vault)<br>
+13.1. [Vault Password](#vault_password)<br>
+13.2. [Variable-level encryption](#vault_variable_level)<br>
+13.2.1. [Encrypting variables](#vault_variable_encryption)<br>
+13.2.2. [Viewing encrypted variables](#view_encryt_variable)<br>
+13.3. [File-level encryption](#vault_file_level)<br>
+13.3.1. [Encrypting files](#vault_encrypting_files)<br>
+13.3.2. [Decrypting files](#vault_decrypting_files)<br>
+13.3.3. [Rotating password](#vault_rotating_password)<br>
+13.4. [Vault ID - Multiple passwords](#vault_id)<br>
+14. [Collection](#collection)<br>
+15. [Developing Modules](#developing_modules)<br>
+15.1. [Verifying your module locally](#verify_your_module)<br>
+15.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
+15.1.2. [Using the module in a Playbook](#verify_your_module_in_a_playbook)<br>
+15.1.3. [Using Python](#verify_your_module_using_python)<br>
+16. [Developing Collections](#developing_collections)<br>
+17. [Developing Plugins](#developing_plugins)<br>
+17.1. [Action Plugin](#action_plugin)<br>
+17.2. [Cache Plugin](#cache_plugin)<br>
+17.3. [Callback Plugin](#callback_plugin)<br>
+17.4. [Connection Plugin](#connection_plugin)<br>
+17.5. [Filter Plugin](#filter_plugin)<br>
+17.6. [Inventory Plugin](#inventory_plugin)<br>
+17.7. [Lookup Plugin](#lookup_plugin)<br>
+17.8. [Test Plugin](#test_plugin)<br>
+17.9. [Vars Plugin](#vars_plugin)<br>
 
 # 1. Introduction <a name="introduction"></a>
 
@@ -100,8 +101,9 @@ In brief, Ansible connects to remote hosts via SSH to execute commands and Pytho
   - **Taks** Call functions defined as Ansible Modules (coded in Python)</br>
   - **Roles** A reusable Ansible content (tasks, variables, ...) for user inside a Play.</br>
   - **Handlers** Handlers are tasks that only run when notified (when the task returns a ‘changed=True’ status).</br>
-- **Variables** Variables store and retrieve values that can be referenced in playbooks, roles, templates and other Ansible components.
-- **Vault** Ansible Vault is a feature of ansible that allows you to keep sensitive data such as passwords or keys in encrypted files.
+- **Variables** Variables store and retrieve values that can be referenced in playbooks, roles, templates and other Ansible components.</br>
+- **Templates** Templates allow you to create new files on the nodes using predefined models based on the Jinja2 templating system.</br>
+- **Vault** Ansible Vault is a feature of ansible that allows you to keep sensitive data such as passwords or keys in encrypted files.</br>
 - **Modules** Usually a Python script sent to each host (when needed) to accomplish the action in each Task.</br>
 - **Plugins** Expands the Ansible's core capactibilities.</br>
   - **Action Plugins** let you integrate local processing and local data with module functionality</br>
@@ -936,11 +938,26 @@ ansible device1 -m service -a "name=httpd state=started"   # With arguments key=
     state: restarted                  # Module args
 ```
 
-# 10 Plugins <a name="plugins"></a>
+# 10 Templates <a name="templates"></a>
+
+[doc](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_templating.html) [template_module](https://docs.ansible.com/ansible/2.8/modules/template_module.html)
+
+In Ansible, templates are files that contain variables and Jinja2 expressions, allowing files to be generated dynamically based on the values of playbook variables. They are commonly used to configure services, such as configuration files for Nginx, Apache, systemd, and others.
+
+Ansible templates use the .j2 extension (indicating that they are Jinja2 templates). To apply a template, the template module in Ansible is used.
+
+```yaml
+- name: Template a file to /etc/files.conf
+  template:
+    src: /mytemplates/foo.j2
+    dest: /etc/file.conf
+```
+
+# 11 Plugins <a name="plugins"></a>
 
 Plugins are pieces of code that augment Ansible’s core functionality. This section covers the various types of plugins that are included with Ansible:
 
-# 10.1 Filter <a name="filter"></a>
+# 11.1 Filter <a name="filter"></a>
 
 [[filter-plugins]](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#filter-plugins)
 [[playbook-filters]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_filters.html)
@@ -1063,7 +1080,7 @@ ansible_managed = This file is managed by Ansible.%n
 ```
 
 
-# 11 Roles <a name="roles"></a>
+# 12 Roles <a name="roles"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
 
@@ -1102,7 +1119,7 @@ Default locations:
 
 You can store the roles in a different location settings `roles_path` in the ansible.cfg
 
-## 11.1 Creating a role (task) <a name="creating_roles"></a>
+## 12.1 Creating a role (task) <a name="creating_roles"></a>
 
 `/etc/ansible/roles/example/tasks/main.yml`
 
@@ -1111,9 +1128,9 @@ You can store the roles in a different location settings `roles_path` in the ans
   # ....
 ```
 
-## 11.2 Using roles <a name="using_roles"></a>
+## 12.2 Using roles <a name="using_roles"></a>
 
-## 11.2.1 Play level <a name="roles_play_level"></a>
+## 12.2.1 Play level <a name="roles_play_level"></a>
 
 Roles in the session roles run before any other tasks in a play.
 
@@ -1139,7 +1156,7 @@ Roles in the session roles run before any other tasks in a play.
         app_port: 5000
 ```
 
-## 11.2.2 Task level <a name="roles_task_level"></a>
+## 12.2.2 Task level <a name="roles_task_level"></a>
 
 **Including roles: dynamic use**
 
@@ -1165,7 +1182,7 @@ The behavior is the same as using the roles keyword.
         name: example
 ```
 
-## 11.2.3 Running specific task files <a name="roles_specific_task"></a>
+## 12.2.3 Running specific task files <a name="roles_specific_task"></a>
 
 You can avoid running the default `main.yml` by using `tasks_from`
 
@@ -1186,7 +1203,7 @@ Another approach is to modify main.yml only to run certain tasks when a conditio
 ```
 
 
-# 12 Vault <a name="vault"></a>
+# 13 Vault <a name="vault"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/vault_guide/index.html)
 
@@ -1194,7 +1211,7 @@ Ansible Vault is a feature of Ansible that allows you to keep sensitive data suc
 
 The command to use Ansible Vault is `ansible-vault` and the available arguments are `create,decrypt,edit,view,encrypt,encrypt_string,rekey`.
 
-## 12.1 Vault Password <a name="vault_password"></a>
+## 13.1 Vault Password <a name="vault_password"></a>
 
 Running any `ansible-vault` command you will prompted for a password. To enforce password prompt when running a playbook with `ansible-playbook` command, you can add the argument `--ask-vault-pass` to the command line.
 
@@ -1207,11 +1224,11 @@ The vault password can be stored:
   - `ansible-playbook --vault-password-file client.py`
   - `ansible-playbook --vault-id dev@client.py`
 
-## 12.2 Variable-level encryption <a name="vault_variable_level"></a>
+## 13.2 Variable-level encryption <a name="vault_variable_level"></a>
 
 Variable-level encryption only works with variables and keeps your files still legible. You can mix plaintext and encrypted variables. However, password rotation is not possible to do with the `rekey` command.
 
-### 12.2.1 Encrypting variables <a name="vault_variable_encryption"></a>
+### 13.2.1 Encrypting variables <a name="vault_variable_encryption"></a>
 
 **Example**: Encrypting the string '1234' using the variable name 'my_secret'
 
@@ -1233,7 +1250,7 @@ my_secret: !vault |
           6239
 ```
 
-### 12.2.2 Viewing encrypted variables <a name="view_encryt_variable"></a>
+### 13.2.2 Viewing encrypted variables <a name="view_encryt_variable"></a>
 
 You can view the original value using the debug module.
 
@@ -1251,12 +1268,12 @@ localhost | SUCCESS => {
 }
 ```
 
-## 12.3 File-level encryption <a name="vault_file_level"></a>
+## 13.3 File-level encryption <a name="vault_file_level"></a>
 
 File-level encryption is easy to use, encrypting variables, tasks, or other Ansible content files. It also allows password rotation with `rekey`, but all the file content will be encrypted, you will not 
 be able to read the variable name without decrypting it.
 
-### 12.3.1 Encrypting files <a name="vault_encrypting_files"></a>
+### 13.3.1 Encrypting files <a name="vault_encrypting_files"></a>
 
 Variable file content (variables.yml):
 ```yaml
@@ -1281,7 +1298,7 @@ $ANSIBLE_VAULT;1.1;AES256
 3166353736346239346166346166393530373532616231343530
 ```
 
-### 12.3.2 Decrypting files <a name="vault_decrypting_files"></a>
+### 13.3.2 Decrypting files <a name="vault_decrypting_files"></a>
 
 ```yaml
 ansible-vault decrypt variables.yml      # Decrypt the entire file
@@ -1289,13 +1306,13 @@ ansible-vault view variables.yml         # View the content decrypted
 ansible-vault edit variables.yml         # Open a editor to edit the 
 ```
 
-### 12.3.3 Rotating password <a name="vault_rotating_password"></a>
+### 13.3.3 Rotating password <a name="vault_rotating_password"></a>
 
 ```yaml
 ansible-vault rekey variables.yml        # Change the ecryption key
 ```
 
-## 12.4 Vault ID - Multiple passwords <a name="vault_id"></a>
+## 13.4 Vault ID - Multiple passwords <a name="vault_id"></a>
 
 You can encrypt files and variables with different passwords. For that you can specify an label (Vault ID) for each encrypted content, using the argument `--vault-id`.
 
@@ -1325,7 +1342,7 @@ ansible-playbook hello.yml --vault-id leo@prompt --vault-id dev@prompt  # Asing 
 
 > **_NOTE 2:_** Even if the label is wrong, the decryption will work if the password is right. Ansible will try to decrypt files/variables with any password given, first trying to do it with the password of the matching label to increase the performance.
 
-# 13 Collection <a name="collection"></a>
+# 14 Collection <a name="collection"></a>
 
 [doc](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html)
 
@@ -1359,7 +1376,7 @@ collection/
 
 A collection must have a galaxy.yml file that contains the necessary information to build a collection artifact. [See Collection Galaxy metadata structure](https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html#collections-galaxy-meta) for details.
 
-# 14 Developing Modules <a name="developing_modules"></a>
+# 15 Developing Modules <a name="developing_modules"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_general.html) [[Should you develop a module?]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules.html#developing-modules)
 
@@ -1377,9 +1394,9 @@ Ansible won't find this module automatically, for that you have these options:
 Module [Return Values](https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html)
 
 
-## 14.1 Verifying your module locally <a name="verify_your_module"></a>
+## 15.1 Verifying your module locally <a name="verify_your_module"></a>
 
-### 14.1.1 Using Ansible adhoc command <a name="verify_your_module_adhoc_command"></a>
+### 15.1.1 Using Ansible adhoc command <a name="verify_your_module_adhoc_command"></a>
 
 Command
 
@@ -1397,7 +1414,7 @@ localhost | CHANGED => {
 }
 ```
 
-### 14.1.2 Using the module in a Playbook <a name="verify_your_module_in_a_playbook"></a>
+### 15.1.2 Using the module in a Playbook <a name="verify_your_module_in_a_playbook"></a>
 
 Create the playbook file `testmod.yml`
 
@@ -1444,7 +1461,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-### 14.1.3 Using Python <a name="verify_your_module_using_python"></a>
+### 15.1.3 Using Python <a name="verify_your_module_using_python"></a>
 
 Create a JSON file `/tmp/args.json`.
 
@@ -1480,7 +1497,7 @@ Output
   }
 }
 ```
-# 15 Developing Collections <a name="developing_collections"></a>
+# 16 Developing Collections <a name="developing_collections"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_creating.html) [[Creating a new collection]](https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_in_groups.html#developing-modules-in-groups)
 
@@ -1514,33 +1531,33 @@ ansible-galaxy collection publish path/to/my_namespace-my_collection-1.0.0.tar.g
 
 You can change the default collections path in the ansible.cfg file by changin the property `collections_path=`.
 
-# 16 Developing Plugins <a name="developing_plugins"></a>
+# 17 Developing Plugins <a name="developing_plugins"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 [[Working with plugins]](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
-## 16.1 Action Plugin <a name="action_plugin"></a>
+## 17.1 Action Plugin <a name="action_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/action.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#action-plugins)
 
-## 16.2 Cache Plugin <a name="cache_plugin"></a>
+## 17.2 Cache Plugin <a name="cache_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/cache.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#cache-plugins)
 
-## 16.3 Callback Plugin <a name="callback_plugin"></a>
+## 17.3 Callback Plugin <a name="callback_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/callback.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins)
 [[examples]](https://github.com/ansible/ansible/tree/devel/lib/ansible/plugins/callback)
 
-## 16.4 Connection Plugin <a name="connection_plugin"></a>
+## 17.4 Connection Plugin <a name="connection_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/connection.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#connection-plugins)
 
-## 16.5 Filter Plugin <a name="filter_plugin"></a>
+## 17.5 Filter Plugin <a name="filter_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/filter.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#filter-plugins)
@@ -1576,22 +1593,22 @@ class FilterModule(object):
         # msg: "{{ 'hello world' | my_namespace.my_collection.to_upper }}"
 ```
 
-## 16.6 Inventory Plugin <a name="inventory_plugin"></a>
+## 17.6 Inventory Plugin <a name="inventory_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#inventory-plugins)
 
-## 16.7 Lookup Plugin <a name="lookup_plugin"></a>
+## 17.7 Lookup Plugin <a name="lookup_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/lookup.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#lookup-plugins)
 
-## 16.8 Test Plugin <a name="test_plugin"></a>
+## 17.8 Test Plugin <a name="test_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/test.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#test-plugins)
 
-## 16.9 Vars Plugin <a name="vars_plugin"></a>
+## 17.9 Vars Plugin <a name="vars_plugin"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/vars.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#vars-plugins)
