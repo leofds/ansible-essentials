@@ -66,7 +66,7 @@ GitHub: https://github.com/ansible/ansible<br>
 12.3.2. [Decrypting files](#vault_decrypting_files)<br>
 12.3.3. [Rotating password](#vault_rotating_password)<br>
 12.4. [Vault ID - Multiple passwords](#vault_id)<br>
-13 [Collection](#collection)
+13 [Collection](#collection)<br>
 14. [Developing Modules](#developing_modules)<br>
 14.1. [Verifying your module locally](#verify_your_module)<br>
 14.1.1. [Using Ansible adhoc command](#verify_your_module_adhoc_command)<br>
@@ -1327,15 +1327,37 @@ ansible-playbook hello.yml --vault-id leo@prompt --vault-id dev@prompt  # Asing 
 
 # 13 Collection <a name="collection"></a>
 
+(doc)[https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html]
+
 A collection is a data structure that can contain these directories and files:
 
 ```
-src
-|-- docs/
-|-- galaxy.yml
-|-- meta/
-|   |-- runtime.yml
+collection/
+  docs/
+    galaxy.yml
+  meta/
+    runtime.yml
+  plugins/
+    modules/
+      module1.py
+    inventory/
+    .../
+  README.md
+  roles/
+    role1/
+    role2/
+    .../
+  playbooks/
+    files/
+    vars/
+    templates/
+    tasks/
+  tests/
 ```
+
+**galaxy.yml**
+
+A collection must have a galaxy.yml file that contains the necessary information to build a collection artifact. [See Collection Galaxy metadata structure](https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html#collections-galaxy-meta) for details.
 
 # 14 Developing Modules <a name="developing_modules"></a>
 
