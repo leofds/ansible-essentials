@@ -1564,11 +1564,9 @@ You can change the default collections path in the ansible.cfg file by changin t
 
 **Filter sample**
 
-Create the filter file in the collection `path/to/my_namespace/my_collection/plugins/filter/string.py` or change the `ansible.cfg` setting the directory with the filter files.
+Create the filter file in the collection `path/to/my_namespace/my_collection/plugins/filter/string.py` or change the `ansible.cfg` setting the directory with the filter files `filter_plugins=`.
 
 ```python
-# /etc/ansible/filter_plugins/string_filters.py
-
 class FilterModule(object):
     def filters(self):
         return {
