@@ -1598,7 +1598,16 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'my_callback'
 
     def v2_runner_on_ok(self, result):
-        print(f"LEO TASK SUCCESS: {result._task.get_name()} -> {result._result}")
+        print(f"TASK SUCCESS: {result._task.get_name()} -> {result._result}")
+
+    def v2_runner_on_failed(self, result, ignore_errors=False):
+        print(f"TASK FAILED: {result._task.get_name()} -> {result._result}")
+
+    def v2_runner_on_skipped(self, result):
+        print(f"TASK SKIPPED: {result._task.get_name()} -> {result._result}")
+
+    def v2_runner_on_unreachable(self, result):
+        print(f"TASK UNREACHABLE: {result._task.get_name()} -> {result._result}")
 ```
 
 **Example 2** type notification
