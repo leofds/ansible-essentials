@@ -456,6 +456,7 @@ mygroup:
       username: "leo"       # host variable
   vars:
     dummy: "superserver"    # group variable
+    vars_file: group_vars/webservers_vars.yml
 ```
 
 ## 7.5 group_vars & host_vars <a name="group_host_vars"></a>
