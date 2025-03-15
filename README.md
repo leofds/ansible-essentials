@@ -616,6 +616,8 @@ The order of precedence from least to greatest (the last listed variables overri
 
   block:
   tasks:
+    delegate_to: localhost
+    run_once: true
   handlers:
   roles:
 ```
