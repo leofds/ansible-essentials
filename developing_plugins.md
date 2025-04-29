@@ -3,6 +3,16 @@
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 [[Working with plugins]](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
+1. [Action Plugin](#action_plugin)<br>
+2. [Cache Plugin](#cache_plugin)<br>
+3. [Callback Plugin](#callback_plugin)<br>
+4. [Connection Plugin](#connection_plugin)<br>
+5. [Filter Plugin](#filter_plugin)<br>
+6. [Inventory Plugin](#inventory_plugin)<br>
+7. [Lookup Plugin](#lookup_plugin)<br>
+8. [Test Plugin](#test_plugin)<br>
+9. [Vars Plugin](#vars_plugin)<br>
+
 **Ansible Display Class**
 
 This class controls how messages are printed to the screen:
