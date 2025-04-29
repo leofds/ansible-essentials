@@ -1584,7 +1584,21 @@ You can change the default collections path in the ansible.cfg file by changin t
 
 # 17 Developing Plugins <a name="developing_plugins"></a>
 
-[]()
+Developing Ansible plugins allows you to extend Ansible's functionality beyond what's available by default.
+
+Ansible supports several plugin types:
+
+- Action Plugin
+- Cache Plugin
+- Callback Plugin
+- Connection Plugin
+- Filter Plugin
+- Inventory Plugin
+- Lookup Plugin
+- Test Plugin
+- Vars Plugin
+
+Check the page [Developing Plugins](https://github.com/leofds/ansible-essentials/blob/master/developing_plugins.md)
 
 ## 18 Env Vars <a name="env_vars"></a>
 
