@@ -3,6 +3,8 @@
 [[doc]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 [[Working with plugins]](https://docs.ansible.com/ansible/latest/plugins/plugins.html)
 
+Developing Ansible plugins allows you to extend Ansible's functionality beyond what's available by default.
+
 1. [Action Plugin](#action_plugin)<br>
 2. [Cache Plugin](#cache_plugin)<br>
 3. [Callback Plugin](#callback_plugin)<br>
@@ -153,6 +155,7 @@ class FilterModule(object):
 
 [[doc]](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
 [[dev]](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#inventory-plugins)
+[[dev-inventory]](https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory)
 
 ## 7 Lookup Plugin <a name="lookup_plugin"></a>
 
