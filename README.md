@@ -49,6 +49,9 @@ GitHub: https://github.com/ansible/ansible<br>
 9.1. [Executing modules from the command line](#running_modules_from_command_line)<br>
 9.2. [Executing modules from playbooks](#running_modules_from_playbooks)<br>
 10. [Templates](#templates)<br>
+10.1. [Variable Expressions](#templates_variable_expressions)<br>
+10.2. [Conditionals](#templates_conditionals)<br>
+10.3. [Loops](#templates_loops)<br>
 11. [Plugins](#plugins)<br>
 11.1. [Filter](#filter)<br>
 12. [Roles](#roles)<br>
@@ -947,15 +950,66 @@ ansible device1 -m service -a "name=httpd state=started"   # With arguments key=
 
 [doc](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_templating.html) [template_module](https://docs.ansible.com/ansible/2.8/modules/template_module.html)
 
-In Ansible, templates are files that contain variables and Jinja2 expressions, allowing files to be generated dynamically based on the values of playbook variables. They are commonly used to configure services, such as configuration files for Nginx, Apache, systemd, and others.
+In Ansible, templates files are files written using Jinja2 templating language that allow dynamic content to be generated during playbook execution. They are commonly used to configure services, such as configuration files for Nginx, Apache, systemd, and others.
 
-Ansible templates use the .j2 extension (indicating that they are Jinja2 templates). To apply a template, the template module in Ansible is used.
+- File extension is usually .j2 (e.g., nginx.conf.j2).
+- Used with the template module in Ansible.
+- Allow you to insert variables, conditionals, loops, and more into files that will be rendered and copied to target machines.
+
+**Example**
+
+`foo.conf.j2
+```json
+server {
+  name {{ server_name }};
+}
+```
 
 ```yaml
-- name: Template a file to /etc/files.conf
-  template:
-    src: /mytemplates/foo.j2
-    dest: /etc/file.conf
+- hosts: all
+  vars:
+    server_name: "example"
+
+  tasks:
+    - name: Template a file to /etc/files.conf
+      template:
+        src: /mytemplates/foo.conf.j2
+        dest: /etc/foo.conf
+```
+
+In Ansible templates, you can use various types of statements to control logic and flow in the template. These include variable expressions, control statements like conditionals and loops, and filters:
+
+## 10.1 Variable Expressions <a name="templates_variable_expressions"></a>
+
+Used to insert variable values into the file.
+
+```jinja2
+Hello, my name is {{ name }}
+```
+
+## 10.2 Conditionals (if, elif, else) <a name="templates_conditionals"></a>
+
+Allow logic based on variable values.
+
+```jinja2
+{% if env == "production" %}
+ENV=production
+{% elif env == "staging" %}
+ENV=staging
+{% else %}
+ENV=development
+{% endif %}
+```
+
+## 10.3 Loops (for) <a name="templates_loops"></a>
+
+Used to iterate over a list or dictionary.
+
+```jinja2
+{% for user in users %}
+- name: {{ user.name }}
+  uid: {{ user.uid }}
+{% endfor %}
 ```
 
 # 11 Plugins <a name="plugins"></a>
