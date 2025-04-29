@@ -960,7 +960,7 @@ In Ansible, templates files are files written using Jinja2 templating language t
 
 `foo.conf.j2`
 
-```json
+```
 server {
   name {{ server_name }};
 }
