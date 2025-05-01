@@ -1084,61 +1084,7 @@ myvar: "value={{ 'value_if_true' if some_condition else 'value_if_false' }}"
 {{ {'a':1, 'b':2} | ansible.builtin.combine({'b':3, 'c':4}) }}  # Combine two dictionaries. => {'a':1, 'b':3, 'c': 4}
 ```
 
-**Comment**
-
-```yaml
-{{ 'Plain style (default)' | comment }}
-
-#
-# Plain style (default)
-#
-```
-
-```yaml
-{{ "C style" | comment('c') }}
-{{ "C block style" | comment('cblock') }}
-{{ "Erlang style" | comment('erlang') }}
-{{ "XML style" | comment('xml') }}
-```
-
-```yaml
-{{ "My Special Case" | comment(decoration="! ") }}
-
-!
-! My Special Case
-!
-```
-
-```yaml
-{{ "Custom style" | comment('plain', prefix='#######\n#', postfix='#\n#######\n   ###\n    #') }}
-
-#######
-#
-# Custom style
-#
-#######
-   ###
-    #
-```
-
-```yaml
-ansible_managed = This file is managed by Ansible.%n
-  template: {file}
-  date: %Y-%m-%d %H:%M:%S
-  user: {uid}
-  host: {host}
-
-{{ ansible_managed | comment }}
-
-#
-# This file is managed by Ansible.
-#
-# template: /home/ansible/env/dev/ansible_managed/roles/role1/templates/test.j2
-# date: 2015-09-10 11:02:58
-# user: ansible
-# host: myhost
-#
-```
+**Comment** [ansible.builtin.comment filter – comment out a string](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/comment_filter.html#ansible-collections-ansible-builtin-comment-filter)
 
 
 # 12 Roles <a name="roles"></a>
