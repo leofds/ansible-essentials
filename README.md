@@ -509,6 +509,14 @@ By default, Ansible gathers facts at the beginning of each play.
     var: ansible_facts
 ```
 
+Disabling facts
+
+```yaml
+- name: Sample Playbook
+  hosts: all
+  gather_facts: false     # Disable facts (optional)
+```
+
 ## 7.8 Registering variables <a name="registering_variables"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html)
