@@ -1014,6 +1014,8 @@ Used to iterate over a list or dictionary.
 
 # 11 Plugins <a name="plugins"></a>
 
+[[ansible.builtin]](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html)
+
 Plugins are pieces of code that augment Ansible’s core functionality. This section covers the various types of plugins that are included with Ansible:
 
 # 11.1 Filter <a name="filter"></a>
