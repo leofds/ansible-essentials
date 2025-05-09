@@ -564,6 +564,8 @@ The order of precedence from least to greatest (the last listed variables overri
 
 # 8 Playbooks <a name="playbooks"></a>
 
+[[Error handling in playbooks]](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_error_handling.html#aborting-on-the-first-error-any-errors-fatal)
+
 ## 8.1 Keywords <a name="playbooks_keywords"></a>
 
 [[doc]](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html)
@@ -615,6 +617,7 @@ The order of precedence from least to greatest (the last listed variables overri
         encrypt: sha512_crypt          # encript. (use private = true)
         unsafe: true                   # allow special chars
         salt_size: 7
+  any_errors_fatal:  true              # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
 
   block:
   tasks:
