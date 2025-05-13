@@ -580,11 +580,11 @@ The order of precedence from least to greatest (the last listed variables overri
 ```yaml
 - name: Sample
   hosts: <pattern>          # Common patterns (they can be combined)
-                            # all - All hosts
-                            # host1 - One host
-                            # host1:host2 (host1,host2) - Multiple hosts/groups
-                            # all:!host1 - All hosts/groups except one
-                            # group1:&group2 - Any hosts in the group1 that are also in the group2
+                            #   all - All hosts
+                            #   host1 - One host
+                            #   host1:host2 (host1,host2) - Multiple hosts/groups
+                            #   all:!host1 - All hosts/groups except one
+                            #   group1:&group2 - Any hosts in the group1 that are also in the group2
   gather_facts: false       # Disable facts to improve performance (default true)
   connection: <plugin>      # Change the connection plugin. Lists available plugins with `ansible-doc -t connection -l`.
                             # ssh - connect via ssh client binary (default)
@@ -617,24 +617,37 @@ The order of precedence from least to greatest (the last listed variables overri
         encrypt: sha512_crypt          # encript. (use private = true)
         unsafe: true                   # allow special chars
         salt_size: 7
-  any_errors_fatal:  true              # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
-
-  block:
-  tasks:
-    delegate_to: localhost
-    run_once: true
-  handlers:
-  roles:
+  check_mode: <boolean>      # If you want certain tasks to run in check mode always, or never.
+                             #   true = This task will never make changes to the system
+                             #   false = This task will always make changes to the system
+  any_errors_fatal:  <boolean>        # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
+```
+```yaml
+  ignore_errors: <boolean>        # By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
+  ignore_unreachable: <boolean>   #
 ```
 
-**Play**
+**Tasks**
 
 ```yaml
-  tasks:
-      notify:                    # List of handlers to notify when the task returns a ‘changed=True’ status.
-      ignore_errors:             # Boolean to ignore the task failures and continue with the play.
-      failed_when:               # Conditional expression that overrides the task 'failed' status.
-      changed_when:              # with true: the task is always resported as changed
+delegate_to: localhost
+run_once: true
+notify:                    # List of handlers to notify when the task returns a ‘changed=True’ status.
+ignore_errors:             # Boolean to ignore the task failures and continue with the play.
+failed_when:               # Conditional expression that overrides the task 'failed' status.
+changed_when:              # with true: the task is always reported as changed
+```
+
+**Block**
+
+```yaml
+
+```
+
+**Role**
+
+```yaml
+
 ```
 
 ## 8.2 Tasks <a name="playbooks_tasks"></a>
