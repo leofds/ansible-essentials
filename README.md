@@ -575,7 +575,7 @@ The order of precedence from least to greatest (the last listed variables overri
 - Block
 - Task
 
-**Play**
+### Play
 
 ```yaml
 - name: Sample
@@ -622,12 +622,16 @@ The order of precedence from least to greatest (the last listed variables overri
                              #   false = This task will always make changes to the system
   any_errors_fatal:  <boolean>        # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
 ```
+- **ignore_errors:** <boolean>
+
+By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
+
 ```yaml
   ignore_errors: <boolean>        # By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
   ignore_unreachable: <boolean>   #
 ```
 
-**Tasks**
+### Tasks
 
 ```yaml
 delegate_to: localhost
