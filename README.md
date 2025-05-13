@@ -579,34 +579,39 @@ The order of precedence from least to greatest (the last listed variables overri
 
 ```yaml
 - name: Sample
-  hosts: <pattern>          # Common patterns (they can be combined)
-                            #   all - All hosts
-                            #   host1 - One host
-                            #   host1:host2 (host1,host2) - Multiple hosts/groups
-                            #   all:!host1 - All hosts/groups except one
-                            #   group1:&group2 - Any hosts in the group1 that are also in the group2
-  gather_facts: false       # Disable facts to improve performance (default true)
-  connection: <plugin>      # Change the connection plugin. Lists available plugins with `ansible-doc -t connection -l`.
-                            # ssh - connect via ssh client binary (default)
-                            # local - execute on controller
-  strategy: free            # Strategy of task execution, linear or free
-  collections:              # Using a collection.
+
+  hosts: <pattern>                     # Common patterns (they can be combined)
+                                       #   all - All hosts
+                                       #   host1 - One host
+                                       #   host1:host2 (host1,host2) - Multiple hosts/groups
+                                       #   all:!host1 - All hosts/groups except one
+                                       #   group1:&group2 - Any hosts in the group1 that are also in the group2
+
+  gather_facts: false                  # Disable facts to improve performance (default true)
+
+  connection: <plugin>                 # Change the connection plugin. Lists available plugins with `ansible-doc -t connection -l`.
+                                       # ssh - connect via ssh client binary (default)
+                                       # local - execute on controller
+
+  strategy: free                       # Strategy of task execution, linear or free
+  collections:                         # Using a collection.
     - my_namespace.my_collection
-  become: yes               # Ansible allows you to ‘become’ another user, different from the user that logged into the machine (remote user).
-                            # This is done using existing privilege escalation tools such as sudo, su, pfexec, doas, pbrun, dzdo, ksu, runas, machinectl and others.
+  become: yes                          # Ansible allows you to ‘become’ another user, different from the user that logged into the machine (remote user).
+                                       # This is done using existing privilege escalation tools such as sudo, su, pfexec, doas, pbrun, dzdo, ksu, runas, machinectl and others.
   become_method: su
-  become_user: nobody       # default root
+  become_user: nobody                  # default root
   become_pass:
-  become_flags: "-i"        # loads the user's login shell as if the user logged in interactively. It loads the environment variables from the user's profile, such as /etc/profile, ~/.bash_profile, or ~/.bashrc, depending on the shell configuration. Ansible uses non-interactive sessions.
+  become_flags: "-i"                   # loads the user's login shell as if the user logged in interactively. It loads the environment variables from the user's profile, such as /etc/profile, ~/.bash_profile, or ~/.bashrc, depending on the shell configuration. Ansible uses non-interactive sessions.
   become_flags: '-s /bin/sh'
   
-  service:                   # Controls services on remote hosts. Ensure the httpd service is running
+  service:                             # Controls services on remote hosts. Ensure the httpd service is running
     name: httpd
     state: started
-  timeout:                   # Time limit for the task to execute in, if exceeded Ansible will interrupt and fail the task.
-  vars:                      # Dictionary/map of variables
+  timeout:                             # Time limit for the task to execute in, if exceeded Ansible will interrupt and fail the task.
+
+  vars:                                # Dictionary/map of variables
     username: 'leo'
-  vars_files:                # List of files that contain vars to include in the play.
+  vars_files:                          # List of files that contain vars to include in the play.
     - /vars/external_vars.yml
   vars_prompt:                         # list of variables to prompt for
     - name: username                   # variable name
@@ -617,18 +622,16 @@ The order of precedence from least to greatest (the last listed variables overri
         encrypt: sha512_crypt          # encript. (use private = true)
         unsafe: true                   # allow special chars
         salt_size: 7
-  check_mode: <boolean>      # If you want certain tasks to run in check mode always, or never.
-                             #   true = This task will never make changes to the system
-                             #   false = This task will always make changes to the system
-  any_errors_fatal:  <boolean>        # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
-```
-- **ignore_errors:** <boolean>
 
-By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
+  check_mode: <boolean>                # If you want certain tasks to run in check mode always, or never.
+                                       # true - this task will never make changes to the system
+                                       # false - this task will always make changes to the system
 
-```yaml
-  ignore_errors: <boolean>        # By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
-  ignore_unreachable: <boolean>   #
+  any_errors_fatal:  <boolean>         # If you set any_errors_fatal and a task returns an error, Ansible finishes the fatal task on all hosts in the current batch and then stops executing the play on all hosts. Subsequent tasks and plays are not executed. You can recover from fatal errors by adding a rescue section to the block. You can set any_errors_fatal at the play or block level.
+
+  ignore_errors: <boolean>             # Ignore task failures and continue with play. It does not affect connection errors.
+                                       # By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
+  ignore_unreachable: <boolean>        # Ignore task failures due to an unreachable host and continue with the play. This does not affect other task errors
 ```
 
 ### Tasks
