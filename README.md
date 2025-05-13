@@ -578,7 +578,7 @@ The order of precedence from least to greatest (the last listed variables overri
 ### Play
 
 ```yaml
-- name: Sample
+- name: Sample                         # Identifier. Can be used for documentation, or in tasks/handlers.
 
   hosts: <pattern>                     # Common patterns (they can be combined)
                                        #   all - All hosts
@@ -593,9 +593,11 @@ The order of precedence from least to greatest (the last listed variables overri
                                        # ssh - connect via ssh client binary (default)
                                        # local - execute on controller
 
-  strategy: free                       # Strategy of task execution, linear or free
   collections:                         # Using a collection.
     - my_namespace.my_collection
+
+  strategy: free                       # Strategy of task execution, linear or free
+
   become: yes                          # Ansible allows you to ‘become’ another user, different from the user that logged into the machine (remote user).
                                        # This is done using existing privilege escalation tools such as sudo, su, pfexec, doas, pbrun, dzdo, ksu, runas, machinectl and others.
   become_method: su
@@ -607,6 +609,7 @@ The order of precedence from least to greatest (the last listed variables overri
   service:                             # Controls services on remote hosts. Ensure the httpd service is running
     name: httpd
     state: started
+
   timeout:                             # Time limit for the task to execute in, if exceeded Ansible will interrupt and fail the task.
 
   vars:                                # Dictionary/map of variables
@@ -632,17 +635,54 @@ The order of precedence from least to greatest (the last listed variables overri
   ignore_errors: <boolean>             # Ignore task failures and continue with play. It does not affect connection errors.
                                        # By default, Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue despite of the failure. The ignore_errors directive only works when the task can run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors.
   ignore_unreachable: <boolean>        # Ignore task failures due to an unreachable host and continue with the play. This does not affect other task errors
+
+  max_fail_percentage: <number>        # Can be used to abort the run after a given percentage of hosts in the current batch has failed. This only works on linear or linear-derived strategies.
+
+  debugger: <options>                  # Enable debugging tasks based on the state of the task result.
+                                       # Options: always, never, on_failed, on_unreachable, on_skipped
+
+  diff: <boolean>                      # Toggle to make tasks return ‘diff’ information or not
+
+  no_log: <boolean>                    # Controls information disclosure.
+
+  order: <options>                     # Controls the sorting of hosts as they are used for executing the play.
+                                       # options: inventory (default), sorted, reverse_sorted, reverse_inventory and shuffle
+
+  tags                                 # Tags applied to the task or included tasks
+
+  throttle: <number>                   # Limit the number of concurrent task runs on task, block and playbook level. This is independent of the forks and serial settings, but cannot be set higher than those limits. For example, if forks is set to 10 and the throttle is set to 15, at most 10 hosts will be operated on in parallel.
+
+  environment
+  fact_path
+  force_handlers
+  gather_facts
+  gather_subset
+  gather_timeout
+  module_defaults
+  port
+  remote_user
+  run_once
+  serial
+  strategy
+  timeout
+
+  tasks
+  post_tasks
+  pre_tasks
+  handlers
+  roles
 ```
 
 ### Tasks
 
 ```yaml
-delegate_to: localhost
-run_once: true
-notify:                    # List of handlers to notify when the task returns a ‘changed=True’ status.
-ignore_errors:             # Boolean to ignore the task failures and continue with the play.
-failed_when:               # Conditional expression that overrides the task 'failed' status.
-changed_when:              # with true: the task is always reported as changed
+  tasks:
+    delegate_to: localhost
+    run_once: true
+    notify:                    # List of handlers to notify when the task returns a ‘changed=True’ status.
+    ignore_errors:             # Boolean to ignore the task failures and continue with the play.
+    failed_when:               # Conditional expression that overrides the task 'failed' status.
+    changed_when:              # with true: the task is always reported as changed
 ```
 
 **Block**
